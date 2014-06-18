@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="gudai" tilewidth="32" tileheight="32">
+  <image source="gudai.png" width="512" height="512"/>
+  <tile id="233">
+   <properties>
+    <property name="Collidable" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="floor" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxrYmBgaBrFo3gUj+JRTHPcOoLsbaWjva1omJZm08ouWppNz/AaxQgMAJ6RMQs=
+  </data>
+ </layer>
+ <layer name="wall" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRgA/4UwEfBOJDQHyYSuYRiy8C8SUgvkyCnlEwCkYB5QAAQ7AVZw==
+  </data>
+ </layer>
+ <layer name="path" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt0jlOAlEAh/HXKicAvYBg45YocgHUY4gV7mhh2GoD6gFUOAAoB3CriYqVNCBUhAKBI/hNosnkZZjVvGr+ya8gQ973hiCEEEnsYg/7OBDed4a6CW1pZJBFDnlF3QKKuMAlrv6he/7LrHuNG9yihLLJeQtYxBKWbbTNuhVUcYd71HT3tcPNO2t7wCOe8IwXi/eQz7Z6Pqn7ije8o4EPh90V3edVg+dGbW0ttPGFDroOu/LvvY0EdnTfMeoO8I0hRhhLZx/iCMf4RHNC/28pnOBUupvcdbIe+hZdo9n5L05hGgEX9/KyIEKYwazC7hzCiGBeYXcNUawjprAbxwY2saWw68+f1/0AhtViRw==
+  </data>
+ </layer>
+ <objectgroup name="hero" width="30" height="20">
+  <object name="kongming" x="31" y="544" width="31" height="28">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <layer name="flower" width="30" height="20">
+  <properties>
+   <property name="Collidable" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYKA+iKCBmaSAGWj86VjE6AWmD5C99AQDGbYDFb6U2rucRPUDnadgYAYDanxvh+JRMApGwSgYBagAAPLLCLE=
+  </data>
+ </layer>
+ <layer name="Meta" width="30" height="20" opacity="0.55">
+  <data encoding="base64" compression="zlib">
+   eJxjYICAV0iYWoCQWa+wYGrZi88sUu0lxW3UtJcUgM88WtoLM3+g7MVmJq3thdlBjr2v0GhS7SHXP8j2khsetAxPctxACaamWcPRXmLCnp5goNPdKBgF5AAAbN6MxQ==
+  </data>
+ </layer>
+ <layer name="layer_up" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIKhAXiogJcA8VIgXkaCnlEwCkbBKCAVAAA2kgM0
+  </data>
+ </layer>
+ <layer name="layer_up2" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztzrcNgDAURVETKqgICxAWIfbEHth/B26JRGPLkin4Vzqd7WelzPLgI0BoeNemBCky5A53C5SoUDvc/UMNWnSa53sMGC13J8xYNM+v2LBb7h44cVm+I72LEH/9CUmSpEc3nrcFpA==
+  </data>
+ </layer>
+</map>

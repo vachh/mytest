@@ -1,0 +1,108 @@
+#include "TmxTestScene.h"
+#include "SimpleAudioEngine.h"
+USING_NS_CC;
+
+bool TmxTestScene::init()
+{
+	if(CCScene::init()){
+		winSize=CCDirector::sharedDirector()->getWinSize();
+		_tileMap=CCTMXTiledMap::create("theworld.tmx"); 
+		this->addChild(_tileMap);
+
+		CCTMXObjectGroup *objects=_tileMap->objectGroupNamed("hero");//取得对象层
+		CCDictionary *spanPoint=objects->objectNamed("kongming");		//取得对象
+		float px=spanPoint->valueForKey("x")->floatValue();//获取对象的坐标  
+		float py=spanPoint->valueForKey("y")->floatValue();  
+		/////////
+
+		_kongming=kongming::create(ccp(px,py));
+		this->addChild(_kongming);
+		////////
+		_touchLayer=TouchLayer::create();
+		this->addChild(_touchLayer,2);
+
+		this->scheduleUpdate();
+		return true;
+	}
+	return false;
+}
+
+TmxTestScene::~TmxTestScene(){
+	//CC_SAFE_RELEASE(_ghosts);
+
+}
+void TmxTestScene::moveMap(CCPoint pos){
+	CCPoint oldPoint=_tileMap->getPosition();
+	float moveX=0,moveY=0;
+
+	CCSize map_size=_tileMap->getContentSize();
+	float m_widthBoundary=(map_size.width-winSize.width);
+	float m_heightBoundary=(map_size.height-winSize.height);
+
+	float m_leftBoundary=oldPoint.x>=0?oldPoint.x:-oldPoint.x;
+	float m_rightBoundary=m_widthBoundary+oldPoint.x;
+	float m_bottomBoundary=oldPoint.y>=0?oldPoint.y:-oldPoint.y;
+	float m_topBoundary=m_heightBoundary+oldPoint.y;
+	//	CCLog("/////////////////////////////////////////////");
+	//CCLog(" m_widthBoundary:	%f",m_widthBoundary );
+	//	CCLog("m_heightBoundary:	 %f", m_heightBoundary);
+	//	CCLog(" m_leftBoundary:	%f", m_leftBoundary);
+	//	CCLog(" m_rightBoundary:	%f", m_rightBoundary);
+	//	CCLog(" m_bottomBoundary:	%f", m_bottomBoundary);
+	//	CCLog(" m_topBoundary:		%f",m_topBoundary );
+
+	if (m_leftBoundary-pos.x<=m_widthBoundary&&m_rightBoundary+pos.x<=m_widthBoundary)
+	{
+		moveX=pos.x;
+	}else
+	{
+		moveX=0;
+	}
+
+
+	if (m_bottomBoundary-pos.y<m_heightBoundary&&m_topBoundary+pos.y<m_heightBoundary)
+	{
+		moveY=pos.y;
+	}else
+	{
+		moveY=0;
+	}
+	_tileMap->setPosition(ccp(oldPoint.x+moveX,oldPoint.y+moveY));//移动地图  
+}
+void TmxTestScene::moveHero(cocos2d::CCPoint pp){
+	CCPoint point=_kongming->getPos();
+	if(fabs(pp.x-point.x)>=fabs(pp.y-point.y))  
+	{  
+		if(pp.x>=point.x)  
+		{  
+			_kongming->ToRight();
+			_kongming->setPos(ccp(point.x+16,point.y));
+			moveMap(ccp(-16,0));
+		}  
+		else  
+		{  
+			_kongming->ToLeft();
+			_kongming->setPos(ccp(point.x-16,point.y));
+			moveMap(ccp(16,0));
+		}  
+	}  
+	else  
+	{  
+		if(pp.y>=point.y)  
+		{  
+			_kongming->ToUp();
+			_kongming->setPos(ccp(point.x,point.y+16));
+			moveMap(ccp(0,-16));
+		}  
+		else  
+		{  
+			_kongming->ToDown();
+			_kongming->setPos(ccp(point.x,point.y-16)); 
+			moveMap(ccp(0,16));
+		}  
+	}  
+}
+
+void TmxTestScene::update(float delta){
+	//_walkman->update(delta);
+}
