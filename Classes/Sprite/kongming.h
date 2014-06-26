@@ -1,25 +1,26 @@
 #ifndef __MyGame__kongming__
 #define __MyGame__kongming__
 #include "cocos2d.h"
-class kongming:public cocos2d::CCNode{
-public:
+struct hero_dir{
 	const static int down=1;
 	const static int	left=2;
 	const static int	right=3;
 	const static int	up=4;
+};
+class kongming:public cocos2d::CCNode{
+public:
+	hero_dir kongming_dir;
 	int state;
-	float w;
-	float h;
-	float _speedX;
+	float spriteWidth;
+	float spriteHeight;
+	float _speed;
 	static kongming* create(cocos2d::CCPoint point);
 	bool init(cocos2d::CCPoint point);
 	~kongming();
 	cocos2d::CCPoint getPos();
-	void setPos(cocos2d::CCPoint point);
-	void ToDown();
-	void ToLeft();
-	void ToRight();
-	void ToUp();
+	void update(float delta);
+	void _setPos(float s);
+	void Turn(int dir);
 
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSize, winSize, WinSize);
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSpriteFrameCache*,frameCache,FrameCache);
