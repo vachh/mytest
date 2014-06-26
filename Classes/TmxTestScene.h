@@ -8,7 +8,6 @@ USING_NS_CC;
 class TmxTestScene : public cocos2d::CCScene
 {
 public:
-	CCPoint touchPos;
 	cocos2d::CCTMXTiledMap *_tileMap; 
 	TouchLayer* _touchLayer;
 	CREATE_FUNC(TmxTestScene);
@@ -21,7 +20,7 @@ protected:
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSize, winSize, WinSize);
 	CC_SYNTHESIZE_READONLY(cocos2d::CCTMXLayer*, _meta, Meta);
 	void update(float delta);
-	bool moveMap(cocos2d::CCPoint mapMoveDis);
+	void moveMap(cocos2d::CCPoint target);
 	void moveHero(cocos2d::CCPoint target);
 };
 

@@ -69,7 +69,7 @@ TmxTestScene::~TmxTestScene(){
 	//CC_SAFE_RELEASE(_ghosts);
 
 }
-bool TmxTestScene::moveMap(CCPoint pos){
+void TmxTestScene::moveMap(CCPoint pos){
 	CCPoint oldPoint=_tileMap->getPosition();
 	float moveX=0,moveY=0;
 
@@ -88,79 +88,78 @@ bool TmxTestScene::moveMap(CCPoint pos){
 	//	CCLog(" m_rightBoundary:	%f", m_rightBoundary);
 	//	CCLog(" m_bottomBoundary:	%f", m_bottomBoundary);
 	//	CCLog(" m_topBoundary:		%f",m_topBoundary );
-	if (m_leftBoundary-pos.x<=m_widthBoundary&&m_rightBoundary+pos.x<=m_widthBoundary){
+	if (m_leftBoundary-pos.x<=m_widthBoundary&&m_rightBoundary+pos.x<=m_widthBoundary)
+	{
 		moveX=pos.x;
-	}else{
+	}else
+	{
 		moveX=0;
 	}
-	if (m_bottomBoundary-pos.y<m_heightBoundary&&m_topBoundary+pos.y<m_heightBoundary){
+	if (m_bottomBoundary-pos.y<m_heightBoundary&&m_topBoundary+pos.y<m_heightBoundary)
+	{
 		moveY=pos.y;
-	}else{
+	}else
+	{
 		moveY=0;
 	}
-	if (moveX==0&&moveY==0){
-		return false;
-	}
 	_tileMap->setPosition(ccp(oldPoint.x+moveX,oldPoint.y+moveY));//移动地图  
-	return true;
 }
 void TmxTestScene::moveHero(cocos2d::CCPoint pp){
 	CCPoint point=_kongming->getPos();
-	touchPos=pp;
+
 	if(fabs(pp.x-point.x)>=fabs(pp.y-point.y))  
 	{  
 		if(pp.x>=point.x)  
 		{  
-			_kongming->Turn(_kongming->kongming_dir.right);
+			_kongming->ToRight();
+
+			CCPoint nowPos=ccp(point.x+16,point.y);
+			CCPoint r_nowPos=ccp(point.x+16,point.y);
+			if (isMove(r_nowPos))
+			{
+			_kongming->setPos(nowPos);
+			moveMap(ccp(-16,0));
+			}
 		}  
 		else  
 		{  
-			_kongming->Turn(_kongming->kongming_dir.left);
+			_kongming->ToLeft();
+			CCPoint nowPos=ccp(point.x-16,point.y);
+			CCPoint r_nowPos=ccp(point.x-16,point.y);
+			if (isMove(r_nowPos))
+			{
+			_kongming->setPos(nowPos);
+			moveMap(ccp(16,0));
+			}		
 		}  
 	}  
 	else  
 	{  
 		if(pp.y>=point.y)  
 		{  
-			_kongming->Turn(_kongming->kongming_dir.up);
+			_kongming->ToUp();
+			CCPoint nowPos=ccp(point.x,point.y+16);
+			CCPoint r_nowPos=ccp(point.x,point.y+16);
+			if (isMove(r_nowPos))
+			{
+			_kongming->setPos(nowPos);
+			moveMap(ccp(0,-16));
+			}
 		}  
 		else  
 		{  
-			_kongming->Turn(_kongming->kongming_dir.down);
+			_kongming->ToDown();
+			CCPoint nowPos=ccp(point.x,point.y-16);
+			CCPoint r_nowPos=ccp(point.x,point.y-16);
+			if (isMove(r_nowPos))
+			{
+			_kongming->setPos(nowPos); 
+			moveMap(ccp(0,16));
+			}
 		}  
 	}  
 }
 
 void TmxTestScene::update(float delta){
-	float s=_kongming->_speed*delta;
-	CCPoint pos=_kongming->getPos();
-	CCPoint nowPos;
-	CCPoint mapMoveDis;					//地图移动距离
-	int now_state=_kongming->state;
-	switch(now_state){
-				case _kongming->kongming_dir.down:
-						nowPos=ccp(pos.x,pos.y-s);
-						mapMoveDis=ccp(0,s/2);
-						break;
-				case _kongming->kongming_dir.left:
-						nowPos=ccp(pos.x-s,pos.y);
-						mapMoveDis=ccp(s/2,0);
-						break;
-				case _kongming->kongming_dir.right:
-						nowPos=ccp(pos.x+s,pos.y);
-						mapMoveDis=ccp(-s/2,0);
-						break;
-				case _kongming->kongming_dir.up:
-						nowPos=ccp(pos.x,pos.y+s);
-						mapMoveDis=ccp(0,-s/2);
-						break;
-	}
-	if (isMove(nowPos))
-	{
-		if (this->moveMap(mapMoveDis)){
-			_kongming->update(s);
-		}else{
-			_kongming->update(s);
-		}
-	}
+	//_walkman->update(delta);
 }
