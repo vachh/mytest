@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="30" height="20" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="40" height="30" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="gudai" tilewidth="32" tileheight="32">
   <image source="gudai.png" width="512" height="512"/>
   <tile id="233">
@@ -8,47 +8,47 @@
    </properties>
   </tile>
  </tileset>
- <layer name="floor" width="30" height="20">
+ <layer name="floor" width="40" height="30">
   <data encoding="base64" compression="zlib">
-   eJxrYmBgaBrFo3gUj+JRTHPcOoLsbaWjva1omJZm08ouWppNz/AaxQgMAJ6RMQs=
+   eJztyLENADAIBLEflzmYPCko2IDGhaXTVZICAICvx+79AAAuPHpU6Cw=
   </data>
  </layer>
- <layer name="wall" width="30" height="20">
+ <layer name="wall" width="40" height="30">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRgA/4UwEfBOJDQHyYSuYRiy8C8SUgvkyCnlEwCkYB5QAAQ7AVZw==
+   eJztzsENABAUREEV6hkVoCG/BQkuZpJ33GRTAgDgd/lAJapR29i8/NejEc0L/wCAuxY1dBUx
   </data>
  </layer>
- <layer name="path" width="30" height="20">
+ <layer name="path" width="40" height="30">
   <data encoding="base64" compression="zlib">
-   eJzt0jlOAlEAh/HXKicAvYBg45YocgHUY4gV7mhh2GoD6gFUOAAoB3CriYqVNCBUhAKBI/hNosnkZZjVvGr+ya8gQ973hiCEEEnsYg/7OBDed4a6CW1pZJBFDnlF3QKKuMAlrv6he/7LrHuNG9yihLLJeQtYxBKWbbTNuhVUcYd71HT3tcPNO2t7wCOe8IwXi/eQz7Z6Pqn7ije8o4EPh90V3edVg+dGbW0ttPGFDroOu/LvvY0EdnTfMeoO8I0hRhhLZx/iCMf4RHNC/28pnOBUupvcdbIe+hZdo9n5L05hGgEX9/KyIEKYwazC7hzCiGBeYXcNUawjprAbxwY2saWw68+f1/0AhtViRw==
+   eJzt0zlOAmEchvFp1ROoXACwcSFh8QKox1ArccGlMKjUxO0AbgcA9QAI1AaFShtBKmKhwBF4Colk8jHM54wZi/+T/IrJNzN5JwTDkCRJtzUksI4NbLrwzn08WtAphQMc4gjpf7bvGCc4xRnOXdiX+ebGvgtc4grXuLG4dxozmMWcjY1u7Msih1vc4d74+X47rPYN2qhTHg8ooIiSxrNW+3rnTveV8YRnVFDV3Bfquw4rzlUbdXpDDXW8o6G5z/w7L2MFq333ONn3iS+00EbHdL6FJLbxgtcBO3vtYBd7pm/47T6dmvgYsk+V3f+UnUYwijGH7/mrxjGBSfg83qLKjwCCmPJ4i6oIoohh3uMtquJYwCKWPN4iSZIkScPqAn7QYkc=
   </data>
  </layer>
- <objectgroup name="hero" width="30" height="20">
-  <object name="kongming" x="31" y="544" width="31" height="28">
+ <objectgroup name="hero" width="40" height="30">
+  <object name="kongming" x="191" y="704" width="31" height="28">
    <ellipse/>
   </object>
  </objectgroup>
- <layer name="flower" width="30" height="20">
+ <layer name="flower" width="40" height="30">
   <properties>
    <property name="Collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYKA+iKCBmaSAGWj86VjE6AWmD5C99AQDGbYDFb6U2rucRPUDnadgYAYDanxvh+JRMApGwSgYBagAAPLLCLE=
+   eJzt1DEOABAMheEe0830Bo7gehYWMWDQVv4vMWg6vOQJEQDWknWATTrd82LmTbYOEFCETr33+ipfOdyP8tcMKnfvsfYDAACAfzS4zAix
   </data>
  </layer>
- <layer name="Meta" width="30" height="20" opacity="0.55">
+ <layer name="Meta" width="40" height="30" opacity="0.55">
   <data encoding="base64" compression="zlib">
-   eJxjYICAV0iYWoCQWa+wYGrZi88sUu0lxW3UtJcUgM88WtoLM3+g7MVmJq3thdlBjr2v0GhS7SHXP8j2khsetAxPctxACaamWcPRXmLCnp5goNPdKBgF5AAAbN6MxQ==
+   eJztkcEJACEMBO2/VKu4lyDhQGOymscMBF/ZHUlrAFCFnphjJzM3K2fXz9P7wu8kOyND4Tfyo/tqv0im2m90RHZXft28Xh/Vv21fpEd5n1f83fZkvFn43fHbca5IZTcAAICZDxSsigc=
   </data>
  </layer>
- <layer name="layer_up" width="30" height="20">
+ <layer name="layer_up" width="40" height="30">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIKhAXiogJcA8VIgXkaCnlEwCkbBKCAVAAA2kgM0
+   eJzty8ENACAIADEGcP8J0DlhBRL9mDa550UAAPDaulB2uzuDBwDgBwX/2AM0
   </data>
  </layer>
- <layer name="layer_up2" width="30" height="20">
+ <layer name="layer_up2" width="40" height="30">
   <data encoding="base64" compression="zlib">
-   eJztzrcNgDAURVETKqgICxAWIfbEHth/B26JRGPLkin4Vzqd7WelzPLgI0BoeNemBCky5A53C5SoUDvc/UMNWnSa53sMGC13J8xYNM+v2LBb7h44cVm+I72LEH/9CUmSpEc3nrcFpA==
+   eJztzjkOgzAURVEzVFAB2QAhG2HsCZA+Yf974LZILlxgnOId6XZf+s8YEfEpopgSSgNvsSmopIoegbfY1PSkhl6Bt8g1Wuqod7wfaKTJ26Kzmd60ON6vtNHH26KzL/1ov+mf+JdRHnqEiIiIyJ87AMi1BaQ=
   </data>
  </layer>
 </map>
