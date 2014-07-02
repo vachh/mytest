@@ -1,7 +1,7 @@
 #pragma once
 #include <queue>//为了使用优先级队列priority_queue  
 #include <stack>  
-#include <vector>   
+#include <list>   
 #define M_ROWS 6
 #define M_COLS 8
 //记录路径上的点的坐标
@@ -36,13 +36,10 @@ struct Node{
 	int f;	//估计函数：f=g+h;
 	struct Node *father;//指向父节点的指针
 };
-class HeapCompare_f{  
-public:  
-	bool operator()(Node* x,Node* y) const  
-	{  
-		return x->f > y->f;//依据估价函数进行排序：升序排列  
-	}  
-}; 
+ static bool CompareByF(Node* x, Node* y)//从大到小排序器  
+       {  
+           return y->f-x->f>0;  
+       }  
 class AStarFindPath
 {
 private:
@@ -50,13 +47,12 @@ private:
 	Node *startNode,*endNode;
 	int m_steps;//记录路径步数
 	int dx[8],dy[8];//8个子节点移动方向：上、下、左、右、左上、右上、右下、左下 
-	std::vector<Node*> openTable;  
-	std::vector<Node*> closeTable;  
+	std::list<Node*> openTable;  
+	std::list<Node*> closeTable;  
 public:
 	AStarFindPath();
 	~AStarFindPath(void);
 	bool findPath();					//寻路主函数  
-
 	int getVal_H(int x,int y);		//估计当前点到目标点的距离：曼哈顿距离  
 	bool isPass(int x,int y);			//判断某一节点是否合法  
 	void printPath();

@@ -3,10 +3,8 @@
 #include <iostream>  
 #include <cstdio>  
 #include <cmath>  
-#include <string>  
-#include <queue>//为了使用优先级队列priority_queue  
-#include <stack>  
-#include <vector> 
+#include <string>   
+#include <list>
 using namespace std;  
 
 const int MaxDistance=9999;
@@ -28,7 +26,7 @@ AStarFindPath::AStarFindPath():m_steps(0)
 														{0,0,0,0,1,0,0,0},
 														{0,0,0,0,1,0,0,0},
 														{0,0,0,0,1,0,0,0},
-														{0,0,0,0,0,0,0,0},
+														{0,0,0,0,1,0,0,0},
 														{0,0,0,0,0,0,0,0}};
 	m_msg = new int *[M_ROWS];  
 	for (int i = 0;i < M_ROWS;++i)  
@@ -39,10 +37,11 @@ AStarFindPath::AStarFindPath():m_steps(0)
 			m_msg[i][j]=m[i][j];
 		}
 	}
-	 cout<<m_msg[1][4]<<endl;
+
+	 cout<<m_msg[2][4]<<endl;
 	endNode = new Node;  
-	endNode->x = 6;  
-	endNode->y = 2;  
+	endNode->x = 4;  
+	endNode->y = 6;  
 	endNode->father = NULL;  
 
 	startNode = new Node;  
@@ -56,55 +55,14 @@ AStarFindPath::AStarFindPath():m_steps(0)
 	
 	
 }
-AStarFindPath::~AStarFindPath(void)
-{
-	//free(m_FileName);
-	//千万不能有这句代码，因为startNode已加入OPEN表，会在释放OPEN表  
-	//的时候释放，否则会造成重复释放，出现bug  
-	//delete startNode;  
-	delete endNode;  
-
-	////释放迷宫布局数组：注意多维数组空间释放  
-	for (int i = 0;i < M_ROWS;++i)  {  
-		delete[] m_msg[i];  
-		}  
-		delete[] m_msg;  
-
-	vector<Node*>::iterator iter;  
-	for (iter = openTable.begin();iter != openTable.end();++iter)  {  
-		delete (*iter);  
-	}  
-	openTable.clear();  
-
-	vector<Node*>::iterator iter2;  
-	for (iter2 = closeTable.begin();iter2 != closeTable.end();++iter2)  {  
-		delete (*iter2);  
-	}  
-	closeTable.clear(); 
-}
-int AStarFindPath::getVal_H(int x,int y){
-	 return (10 * (abs(endNode->x - x) + abs(endNode->y - y)));  
-}
-bool AStarFindPath::isPass(int x,int y)  
-{  
-	if (x >= 0 && x < M_ROWS &&  
-		y >= 0 && y < M_COLS&& 
-		m_msg[x][y] == 0)  
-		return true;  
-	else  
-		return false;  
-} 
 bool AStarFindPath::findPath(){
 	if (startNode->x==endNode->x&&startNode->y==endNode->y){
 		cout<<"WARNNING:　The start point is the same as the end point! "<<endl;
 		return true;
 	}
 	openTable.push_back(startNode);//起始点装入OPEN表  
-	push_heap(openTable.begin(),openTable.end(),HeapCompare_f());
-	
-
 	Node* tempNode=new Node;
-	
+
 	//开始遍历  
 for (;;)  
 	{  
@@ -114,10 +72,11 @@ for (;;)
 			return false;  
 		}  
 	
-	++m_steps;
-	tempNode=openTable.front();
-	 pop_heap(openTable.begin(),openTable.end(),HeapCompare_f());
-	openTable.pop_back();
+	++m_steps;										//步数加1
+	tempNode=openTable.front();		//取得f值最小的第一个值	
+	// pop_heap(openTable.begin(),openTable.end(),HeapCompare_f());
+	closeTable.push_back(openTable.front());		//添加到close表
+	openTable.pop_front();						//从open表中删除
 	//判断是否已经搜寻到目标节点  
 	if (tempNode->x == endNode->x&& tempNode->y == endNode->y)  
 	{  
@@ -135,21 +94,40 @@ for (;;)
 	{
 		int tempX=tempNode->x+dx[i];
 		int tempY=tempNode->y+dy[i];
+				//搜索CLOSED表，判断此节点是否已经存在于其中  
+			list<Node*>::iterator CLOSEDTableResult;  
+			for (CLOSEDTableResult = closeTable.begin();  
+				CLOSEDTableResult != closeTable.end();++CLOSEDTableResult)  
+			{  
+				if ((*CLOSEDTableResult)->x == tempX &&  
+					(*CLOSEDTableResult)->y == tempY)  
+				{  
+					break;  
+				}  
+			}  
+			//此节点已经存在于CLOSED表中  ,跳过该节点
+			if (CLOSEDTableResult != closeTable.end())  {  
+				continue;    
+			} 
+
 		if (isPass(tempX,tempY))					//如果能通过
 		{
-			int newGVal;  
+	
+///////////////////////////////////////////////////////////////////
+			int newGVal;										//计算g值
 			if (!dx[i] && !dy[i])							//位于对角线上  
 			{  
 				newGVal = tempNode->g + 14;  
 			}  
 			else  
 				newGVal = tempNode->g + 10;  
+////////////////////////////////////////////////////////////////////////		
 			//搜索OPEN表，判断此点是否在OPEN表中  
-			vector<Node*>::iterator OPENTableResult;  
+			list<Node*>::iterator OPENTableResult;  
 			for (OPENTableResult = openTable.begin();  
 				OPENTableResult != openTable.end();++OPENTableResult)  
 			{  
-				if ((*OPENTableResult)->x == tempX &&  
+				if ((*OPENTableResult)->x == tempX &&	
 					(*OPENTableResult)->y == tempY)  
 				{  
 					break;  
@@ -164,26 +142,15 @@ for (;;)
 					continue;  
 				}  
 			}  
-			//搜索CLOSED表，判断此节点是否已经存在于其中  
-			vector<Node*>::iterator CLOSEDTableResult;  
-			for (CLOSEDTableResult = closeTable.begin();  
-				CLOSEDTableResult != closeTable.end();++CLOSEDTableResult)  
+			//如果已经存在于OPEN表，删除该节点，从新插入新值
+			if (OPENTableResult != openTable.end())  
 			{  
-				if ((*CLOSEDTableResult)->x == tempX &&  
-					(*CLOSEDTableResult)->y == tempY)  
-				{  
-					break;  
-				}  
+				delete (*OPENTableResult);  
+				openTable.erase(OPENTableResult);  
+			//	openTable.sort();
 			}  
-			//此节点已经存在于CLOSED表中  
-			if (CLOSEDTableResult != closeTable.end())  
-			{  
-				//CLOSED表中的节点已经是最优的，则跳过  
-				if ((*CLOSEDTableResult)->g <= newGVal)  
-				{  
-					continue;  
-				}  
-			} 
+//////////////////////////////////////////////////////
+		
 			Node* pNode=new Node;
 			pNode->x=tempX;
 			pNode->y=tempY;
@@ -191,27 +158,9 @@ for (;;)
 			pNode->h=getVal_H(tempX,tempY);
 			pNode->f=pNode->g+pNode->h;
 			pNode->father=tempNode;
-			
-			//如果已经存在于CLOSED表中，将其移除  
-			if (CLOSEDTableResult != closeTable.end())  
-			{  
-				delete (*CLOSEDTableResult);  
-				closeTable.erase(CLOSEDTableResult);  
-			}  
 
-			//如果已经存在于OPEN表，更新  
-			if (OPENTableResult != openTable.end())  
-			{  
-				delete (*OPENTableResult);  
-				openTable.erase(OPENTableResult);  
-
-				//重新建堆，实现排序。注意不能用sort_heap，因为如果容器为空的话会出现bug  
-				make_heap(openTable.begin(),openTable.end(),HeapCompare_f());  
-			}  
-
-			openTable.push_back(pNode);//将最优节点放入OPEN表  
-
-			push_heap(openTable.begin(),openTable.end(),HeapCompare_f());//重新排序
+			openTable.push_back(pNode);//将该节点放入OPEN表  
+			openTable.sort(CompareByF);							//重新排序
 		}
 	}
 		closeTable.push_back(tempNode);
@@ -247,4 +196,44 @@ void AStarFindPath::printPath(){
 	}  
 
 	cout << "搜索总步数："  << m_steps << endl; 
+}
+int AStarFindPath::getVal_H(int x,int y){												//x,y距离和
+	 return (10 * (abs(endNode->x - x) + abs(endNode->y - y)));  
+}
+bool AStarFindPath::isPass(int x,int y)  //如果为0表示可以通过。
+{  
+	if (x >= 0 && x < M_ROWS &&  
+		y >= 0 && y < M_COLS)
+		{
+			if(m_msg[x][y] == 0)  
+		return true;
+	}  
+	else  
+		return false;  
+} 
+AStarFindPath::~AStarFindPath(void)
+{
+	//free(m_FileName);
+	//千万不能有这句代码，因为startNode已加入OPEN表，会在释放OPEN表  
+	//的时候释放，否则会造成重复释放，出现bug  
+	//delete startNode;  
+	delete endNode;  
+
+	////释放迷宫布局数组：注意多维数组空间释放  
+	for (int i = 0;i < M_ROWS;++i)  {  
+		delete[] m_msg[i];  
+		}  
+		delete[] m_msg;  
+
+	list<Node*>::iterator iter;  
+	for (iter = openTable.begin();iter != openTable.end();++iter)  {  
+		delete (*iter);  
+	}  
+	openTable.clear();  
+
+	list<Node*>::iterator iter2;  
+	for (iter2 = closeTable.begin();iter2 != closeTable.end();++iter2)  {  
+		delete (*iter2);  
+	}  
+	closeTable.clear(); 
 }
