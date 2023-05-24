@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6b82dce5d21f84998a824c5a6f9c8b, type: 3}
+  m_Name: AddressableGeneratorConfig
+  m_EditorClassIdentifier: 
+  RootPath: {fileID: 102900000, guid: 2358668e93ab3b040ad796246ca9035a, type: 3}
+  ForcePackTogetherPaths: []
+  ForcePackSeparatelyPaths:
+  - {fileID: 102900000, guid: fb3da4a088b60be4eb6aa30d403389a3, type: 3}
+  FilterPaths: []
